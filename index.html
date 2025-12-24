@@ -1,66 +1,604 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vikrant Kumar | UI/UX Designer</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="javascript.js">
-    
-</head>
-<body>
-    <header>
-        <div class="container">
-            <h1>Vikrant Kumar</h1>
-            <p>UI/UX Designer & Developer</p>
-        </div>
-    </header>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PetPal – Your Ultimate Pet Care Companion</title>
 
-    <nav>
-        <ul>
-            <li><a href="#about">About Me</a></li>
-            <li><a href="#skills">Skills</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
+    <!-- Meta Tags for SEO -->
+    <meta name="description"
+        content="PetPal provides instant AI-powered help for pet owners, including health advice, food guidance, and grooming tips.">
+    <meta name="keywords" content="pet care, dog help, cat care, pet health, AI pet assistant">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap 5.3 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- AOS Library for Animations -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <!-- Dialogflow Messenger -->
+    <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+
+    <style>
+        :root {
+            --primary: #10B981;
+            --primary-dark: #065F46;
+            --secondary: #F59E0B;
+            --bg-light: #F8FAFC;
+            --text-main: #1E293B;
+            --text-muted: #64748B;
+            --glass: rgba(255, 255, 255, 0.8);
+            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-main);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Navbar Styling */
+        .navbar {
+            backdrop-filter: blur(10px);
+            background: var(--glass);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-link {
+            color: var(--text-main) !important;
+            font-weight: 500;
+            padding: 0.5rem 1rem !important;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--primary) !important;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 160px 0 100px;
+            background: radial-gradient(circle at top right, rgba(16, 185, 129, 0.05), transparent);
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-title span {
+            color: var(--primary);
+        }
+
+        .hero-subtitle {
+            font-size: 1.125rem;
+            color: var(--text-muted);
+            margin-bottom: 2.5rem;
+            max-width: 540px;
+        }
+
+        .hero-image-wrapper {
+            position: relative;
+        }
+
+        .hero-image-card {
+            background: white;
+            padding: 20px;
+            border-radius: 40px;
+            box-shadow: var(--shadow-lg);
+            transform: rotate(2deg);
+            transition: transform 0.3s ease;
+        }
+
+        .hero-image-card:hover {
+            transform: rotate(0deg);
+        }
+
+        .hero-image-card img {
+            border-radius: 30px;
+            width: 100%;
+        }
+
+        /* Stats */
+        .stat-item h3 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0;
+        }
+
+        .stat-item p {
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        /* Services section */
+        .services {
+            padding: 100px 0;
+            background: white;
+        }
+
+        .section-tag {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--primary);
+            padding: 8px 16px;
+            border-radius: 100px;
+            font-weight: 600;
+            font-size: 0.875rem;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .service-card {
+            border: none;
+            border-radius: 24px;
+            background: var(--bg-light);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            height: 100%;
+            overflow: hidden;
+            border: 1px solid transparent;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            background: white;
+            border-color: rgba(16, 185, 129, 0.1);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .service-card .img-container {
+            height: 220px;
+            overflow: hidden;
+        }
+
+        .service-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .service-card:hover img {
+            transform: scale(1.1);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 80px 0;
+        }
+
+        .cta-card {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: 40px;
+            padding: 60px 40px;
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-card::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+
+        /* Buttons */
+        .btn-primary-custom {
+            background: var(--primary);
+            color: white;
+            padding: 14px 32px;
+            border-radius: 100px;
+            font-weight: 600;
+            border: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px -5px rgba(16, 185, 129, 0.4);
+        }
+
+        .btn-primary-custom:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 15px 25px -5px rgba(16, 185, 129, 0.5);
+            color: white;
+        }
+
+        .btn-secondary-custom {
+            background: transparent;
+            color: var(--primary);
+            padding: 14px 32px;
+            border-radius: 100px;
+            font-weight: 600;
+            border: 2px solid var(--primary);
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary-custom:hover {
+            background: rgba(16, 185, 129, 0.05);
+            transform: translateY(-2px);
+        }
+
+        /* Chatbot Modern Styling (Orange Theme) */
+        df-messenger {
+            --df-messenger-button-titlebar-color: #F59E0B;
+            --df-messenger-user-message: #F59E0B;
+            --df-messenger-user-message-text-color: #ffffff;
+            --df-messenger-bot-message: #F1F5F9;
+            --df-messenger-chat-background-color: #ffffff;
+            --df-messenger-font-color: var(--text-main);
+            --df-messenger-input-box-color: #F8FAFC;
+            --df-messenger-input-font-color: var(--text-main);
+            --df-messenger-send-icon: #F59E0B;
+            --df-messenger-chat-window-height: 550px;
+            --df-messenger-chat-window-width: 380px;
+            --df-messenger-titlebar-title-color: #ffffff;
+            --df-messenger-minimized-chat-close-icon-color: #ffffff;
+
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 10000;
+        }
+
+        /* Responsive Chat Window */
+        @media (max-width: 576px) {
+            df-messenger {
+                --df-messenger-chat-window-width: 85vw;
+                --df-messenger-chat-window-height: 60vh;
+                right: 15px;
+                bottom: 15px;
+            }
+        }
+
+        /* Styling the internal button (if possible via CSS variables or shadow DOM hacks) */
+        df-messenger {
+            --df-messenger-button-padding: 0px;
+        }
+
+        /* Modern Chat Bubble Shadow */
+        df-messenger>>>.df-messenger-wrapper #widgetIcon {
+            box-shadow: var(--shadow-lg) !important;
+        }
+
+        /* Footer */
+        footer {
+            padding: 60px 0 30px;
+            background: #f1f5f9;
+        }
+
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        /* Responsive Adjustments & Mobile Optimization */
+        @media (max-width: 991.98px) {
+            .hero {
+                padding: 120px 0 60px;
+            }
+
+            .hero-title {
+                text-align: center;
+            }
+
+            .hero-subtitle {
+                text-align: center;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .hero-btns {
+                justify-content: center !important;
+            }
+
+            .hero-stats {
+                justify-content: center !important;
+            }
+
+            .hero-image-wrapper {
+                margin-top: 50px;
+            }
+        }
+
+        /* Specific Mobile Polish (Small Screens) */
+        @media (max-width: 767.98px) {
+            .hero-title {
+                font-size: 2.2rem;
+                /* Reduced from 2.5rem+ */
+                margin-bottom: 1rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+                margin-bottom: 2rem;
+            }
+
+            .hero {
+                padding-top: 100px;
+            }
+
+            .btn-primary-custom,
+            .btn-secondary-custom {
+                padding: 12px 24px;
+                font-size: 0.9rem;
+            }
+
+            .section-tag {
+                padding: 6px 12px;
+                font-size: 0.75rem;
+            }
+
+            .stat-item h3 {
+                font-size: 1.8rem;
+            }
+
+            .stat-item p {
+                font-size: 0.85rem;
+            }
+
+            .services {
+                padding: 60px 0;
+            }
+
+            .display-5 {
+                font-size: 1.8rem !important;
+            }
+
+            .cta-card {
+                padding: 40px 20px;
+                border-radius: 30px;
+            }
+
+            .cta-card .display-4 {
+                font-size: 1.75rem !important;
+            }
+
+            .service-card .img-container {
+                height: 180px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top py-3">
+        <div class="container">
+            <a class="navbar-brand fw-bold text-primary" href="#">PETPAL</a>
+            <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navContent">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navContent">
+                <ul class="navbar-nav ms-auto gap-3">
+                    <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#how-it-works">How it Works</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#faq">FAQs</a></li>
+                </ul>
+                <div class="ms-lg-4 mt-3 mt-lg-0">
+                    <a href="#chat" class="btn btn-primary-custom px-4 py-2">Get Help Now</a>
+                </div>
+            </div>
+        </div>
     </nav>
 
-    <section id="about" class="container">
-        <h2>About Me</h2>
-        <p>Hi, I’m Vikrant Kumar, a UI/UX designer with a passion for creating user-friendly and visually appealing interfaces. I also have basic knowledge of HTML, CSS, JavaScript, and C++. Let’s build something great together.</p>
-    </section>
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6" data-aos="fade-right">
+                    <span class="section-tag">#AdoptLoveCare</span>
+                    <h1 class="hero-title">Your Pet's Best <span>Friend</span> Just Got Smarter</h1>
+                    <p class="hero-subtitle">
+                        Instant AI-powered guidance for every wag, purr, and chirp. From health emergencies to diet
+                        tips, PetPal is here 24/7.
+                    </p>
+                    <div class="d-flex gap-3 hero-btns">
+                        <a href="#services" class="btn btn-primary-custom">Explore Services</a>
+                        <a href="#" class="btn btn-secondary-custom">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                                class="bi bi-play-fill me-1" viewBox="0 0 16 16">
+                                <path
+                                    d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z" />
+                            </svg>
+                            Watch Video
+                        </a>
+                    </div>
 
-    <section id="skills" class="container">
-        <h2>Skills</h2>
-        <ul>
-            <li>User Interface Design</li>
-            <li>User Experience Design</li>
-            <li>HTML, CSS, JavaScript</li>
-            <li>C++, Excel, Word, PowerPoint</li>
-        </ul>
-    </section>
-
-    <section id="projects" class="container">
-        <h2>Projects</h2>
-        <div class="project">
-            <h3>Project 1: Mobile App Design</h3>
-            <p>Created an interactive prototype for a mobile app focusing on user-centric design principles.</p>
+                    <div class="d-flex gap-5 mt-5 hero-stats">
+                        <div class="stat-item">
+                            <h3>2K+</h3>
+                            <p>Veterinarians</p>
+                        </div>
+                        <div class="stat-item">
+                            <h3>50K+</h3>
+                            <p>Happy Pets</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 hero-image-wrapper" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="hero-image-card">
+                        <img src="assets/hero.png" alt="Smart Happy Pets">
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="project">
-            <h3>Project 2: Website Redesign</h3>
-            <p>Redesigned an e-commerce website to improve user navigation and overall experience.</p>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <div class="container">
+            <div class="text-center mb-5" data-aos="fade-up">
+                <span class="section-tag">Our Care</span>
+                <h2 class="fw-bold display-5">A Smarter Way to Care</h2>
+                <p class="text-muted mx-auto" style="max-width: 600px;">
+                    Comprehensive support for every aspect of your pet's life, powered by advanced AI and veterinary
+                    knowledge.
+                </p>
+            </div>
+
+            <div class="row g-4">
+                <!-- Service 1 -->
+                <div class="col-md-3 col-sm-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="card service-card p-3">
+                        <div class="img-container rounded-4 mb-3">
+                            <img src="assets/health.png" alt="Pet Health">
+                        </div>
+                        <div class="card-body p-0">
+                            <h5 class="fw-bold mb-2">Pet Health</h5>
+                            <p class="text-muted small mb-0">Get instant advice on common symptoms and medical
+                                emergencies.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Service 2 -->
+                <div class="col-md-3 col-sm-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="card service-card p-3">
+                        <div class="img-container rounded-4 mb-3">
+                            <img src="assets/food.png" alt="Food Guide">
+                        </div>
+                        <div class="card-body p-0">
+                            <h5 class="fw-bold mb-2">Diet & Food</h5>
+                            <p class="text-muted small mb-0">Discover safe nutrition and personalized meal plans for
+                                your pet.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Service 3 -->
+                <div class="col-md-3 col-sm-6" data-aos="fade-up" data-aos-delay="300">
+                    <div class="card service-card p-3">
+                        <div class="img-container rounded-4 mb-3">
+                            <img src="assets/vaccination.png" alt="Vaccination">
+                        </div>
+                        <div class="card-body p-0">
+                            <h5 class="fw-bold mb-2">Vaccination</h5>
+                            <p class="text-muted small mb-0">Never miss a dose with smart reminders and schedule
+                                tracking.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Service 4 -->
+                <div class="col-md-3 col-sm-6" data-aos="fade-up" data-aos-delay="400">
+                    <div class="card service-card p-3">
+                        <div class="img-container rounded-4 mb-3">
+                            <img src="assets/grooming.png" alt="Grooming">
+                        </div>
+                        <div class="card-body p-0">
+                            <h5 class="fw-bold mb-2">Grooming</h5>
+                            <p class="text-muted small mb-0">Professional tips on coat care, bathing, and stress-free
+                                grooming.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
-    <section id="contact" class="container">
-        <h2>Contact Me</h2>
-        <p>Email: <a href="mailto:vikrantkumar@example.com">vikrantkumar@example.com</a></p>
+    <!-- CTA Section -->
+    <section id="chat" class="cta-section">
+        <div class="container">
+            <div class="cta-card shadow-lg" data-aos="zoom-in">
+                <h2 class="display-4 fw-bold mb-3">Your Furry Friend is in Safe Hands 🐾</h2>
+                <p class="fs-5 mb-5 opacity-75">Connect with our AI expert anytime for instant support and peace of
+                    mind.</p>
+                <button class="btn btn-light rounded-pill px-5 py-3 fw-bold text-primary shadow-sm"
+                    onclick="openChat()">Try the Chatbot Now</button>
+            </div>
+        </div>
     </section>
 
+    <!-- Footer -->
     <footer>
-        <p>© 2024 Vikrant Kumar | UI/UX Designer</p>
+        <div class="container">
+            <div class="row gy-4">
+                <div class="col-lg-4">
+                    <div class="footer-logo">PETPAL</div>
+                    <p class="text-muted">Empowering pet owners with smart technology and compassionate care advice.
+                        Your pet deserves the best.</p>
+                </div>
+                <div class="col-lg-2 ms-lg-auto">
+                    <h6 class="fw-bold mb-3">Quick Links</h6>
+                    <ul class="list-unstyled text-muted">
+                        <li><a href="#" class="text-decoration-none text-muted">About Us</a></li>
+                        <li><a href="#" class="text-decoration-none text-muted">Services</a></li>
+                        <li><a href="#" class="text-decoration-none text-muted">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3">
+                    <h6 class="fw-bold mb-3">Community</h6>
+                    <ul class="list-unstyled text-muted">
+                        <li><a href="#" class="text-decoration-none text-muted">Vet Network</a></li>
+                        <li><a href="#" class="text-decoration-none text-muted">Success Stories</a></li>
+                        <li><a href="#" class="text-decoration-none text-muted">Blog</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-5 opacity-10">
+            <div class="text-center text-muted small">
+                &copy; 2024 PetPal. All rights reserved. Made with ❤️ for pets.
+            </div>
+        </div>
     </footer>
 
-    <script src="script.js"></script>
+    <!-- Enhanced Floating Chatbot (Orange Theme) -->
+    <df-messenger chat-title="PetPal Assistant" agent-id="56bd47f4-8c5a-4c68-a6d2-3ec13ed12bc7" language-code="en"
+        wait-for-init="true">
+    </df-messenger>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 1000,
+            once: true,
+            easing: 'ease-out-cubic'
+        });
+
+        function openChat() {
+            const messenger = document.querySelector('df-messenger');
+            if (messenger) {
+                messenger.expand();
+            }
+        }
+
+        // Transparent Navbar on scroll
+        window.onscroll = function () {
+            const nav = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('shadow-sm');
+                nav.classList.add('py-2');
+                nav.classList.remove('py-3');
+            } else {
+                nav.classList.remove('shadow-sm');
+                nav.classList.add('py-3');
+                nav.classList.remove('py-2');
+            }
+        };
+    </script>
 </body>
+
 </html>
